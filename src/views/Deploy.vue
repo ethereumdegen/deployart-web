@@ -25,18 +25,18 @@
               <NotConnectedToWeb3 />
           </div>
 
-          <div  class=" " v-if=" connectedToWeb3">
+          <div  class=" px-4" v-if=" connectedToWeb3">
 
              
             
 
           
 
-             <div class="mb-4 ">
-              <label   class="block text-md font-medium font-bold text-gray-800  ">Art Name</label>
+             <div class="mb-4  ">
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Name of Work</label>
 
               <div class="flex flex-row">
-              <div class="w-1/2 px-4">
+              <div class="w-1/2  ">
                     <input type="text"   v-model="formInputs.artName"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="my first work">
                 </div>
 
@@ -45,8 +45,83 @@
            
             </div>
 
+            <div class="mb-4  ">
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Token Metadata IPFS Hash</label>
+
+              <div class="flex flex-row">
+              <div class="w-1/2  ">
+                    <input type="text"   v-model="formInputs.artName"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="ipfs://qradw112d2...">
+                </div>
+
+               
+              </div>
+           
+            </div>
+
+
+
+                <div class="mb-4">
+                <label   class="block text-md font-medium font-bold text-gray-800  ">Purchase Currency Token</label>
+                
+
+                <div class="flex flex-row">
+
+                <GenericDropdown
+                  v-bind:optionList="currencyTokensOptionsList" 
+                  v-bind:onSelectCallback="onCurrencySelectCallback"
+                />
+                  <div class="mb-4 p-4 ml-8" v-if="formInputs.tokenContractAddress">
+                    Balance: {{ getSelectedCurrencyBalanceFormatted() }}
+                </div>
+                </div>
+
+
+            </div>
+
+            
+
+              
+           <div class="mb-4 ">
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Purchase Currency Amount</label>
+
+              <div class="flex flex-row">
+              <div class="w-1/2 ">
+                    <input type="number"   v-model="formInputs.tokenBidAmountFormatted"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="0.00">
+                </div> 
+                 
+              </div>
+           
+            </div>
+
+
+
+              <div class="mb-4">
+                <label   class="block text-md font-medium font-bold text-gray-800  ">Required NFT Held to Mint</label>
+                
+                <GenericDropdown
+                  ref="nftOptionList"
+                  v-bind:optionList="nftOptionsList" 
+                  v-bind:onSelectCallback="onNFTSelectCallback"
+                />
+            </div>
+
+
+
 
           </div>
+
+           <div class="py-4" v-if=" connectedToWeb3 && !mintSubmitComplete">
+             
+ 
+ 
+ 
+                 <div class="  p-4">
+                     <div @click="signForMint" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Launch </div>
+                </div>
+
+
+          </div>
+
 
 
           
@@ -79,6 +154,7 @@ import Navbar from './components/Navbar.vue';
 import Footer from './components/Footer.vue';
 import TabsBar from './components/TabsBar.vue';
 import GenericTable from './components/GenericTable.vue';
+import GenericDropdown from './components/GenericDropdown.vue';
  
 
 import FrontendHelper from '../js/frontend-helper.js'
@@ -86,7 +162,7 @@ import FrontendHelper from '../js/frontend-helper.js'
 export default {
   name: 'Deploy',
   props: [],
-  components: {Navbar, Footer, TabsBar, GenericTable, NotConnectedToWeb3},
+  components: {Navbar, Footer, TabsBar, GenericTable, GenericDropdown,NotConnectedToWeb3},
   data() {
     return {
       web3Plug: new Web3Plug() , 
@@ -95,7 +171,8 @@ export default {
 
        
       connectedToWeb3: false,
-      currentBlockNumber: 0
+      currentBlockNumber: 0,
+      mintSubmitComplete:false
     }
   },
 

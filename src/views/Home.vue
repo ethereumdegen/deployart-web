@@ -31,8 +31,7 @@
             <router-link to="/deploy" class="text-black text-xl my-4 p-2 no-underline bg-purple-500 hover:bg-purple-600 rounded cursor-pointer inline-block"> Deploy an NFT   </router-link> 
         </div>
             
-            <a :href="getRouteTo('docs')" class="text-white text-lg my-4"> Read the docs  </a> 
-
+          
 
          </div>
          <div class="   md:w-1/2  w-full  text-center ">
