@@ -1,0 +1,14 @@
+{   "contractName":"HyperNFT",
+    "version":"1",
+    "primaryType":"MintPacket",
+    "entries":{
+         
+        "artist":"address",
+        "keypassToken":"address",
+        "uri":"string",
+        "currencyToken":"address",
+        "currencyAmount":"uint256"
+        
+     }
+}
+ 

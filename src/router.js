@@ -7,7 +7,7 @@ import Home from './views/Home.vue'
 
 import Dashboard from './views/Dashboard.vue'
 
-import Create from './views/Create.vue'
+import Deploy from './views/Deploy.vue'
  
 import Mint from './views/Mint.vue'
  
@@ -34,9 +34,9 @@ export default new Router({
     } ,
 
     {
-      path: '/create',
-      name: 'create',
-      component: Create
+      path: '/deploy',
+      name: 'deploy',
+      component: Deploy
     } ,
 
     {

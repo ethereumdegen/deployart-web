@@ -7,10 +7,9 @@
       <div v-if="web3Plug.connectedToWeb3() "   class="truncate text-center text-gray-800 p-2" style="   ">
 
       
-        <AccessButton
+        <Web3NetButton
            v-bind:providerNetworkID="activeNetworkId"
-           v-bind:web3Plug='web3Plug'
-           v-bind:accessPlug='accessPlug' 
+           v-bind:web3Plug='web3Plug' 
          />
 
 
@@ -113,12 +112,12 @@
 
 
 <script>
-import AccessButton from './AccessButton.vue'
+import Web3NetButton from './Web3NetButton.vue'
 import Config from '../config/UpperNav.js'
 export default {
   name: 'AccordionNav',
-  props: ['web3Plug', 'accessPlug' ],
-  components:{AccessButton},
+  props: ['web3Plug'  ],
+  components:{Web3NetButton},
   data() {
     return {
       activeAccountAddress:null,
