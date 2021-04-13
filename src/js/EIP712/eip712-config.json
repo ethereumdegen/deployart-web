@@ -6,6 +6,7 @@
         "artist":"address",
         "keypassToken":"address",
         "uri":"string",
+        "nonce":"uint256",
         "currencyToken":"address",
         "currencyAmount":"uint256"
         

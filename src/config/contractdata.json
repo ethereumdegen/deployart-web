@@ -24,12 +24,13 @@
  
       "weth":{"name":"wEth","address":"0xf5e7aa9fd045ce55c68f9a4f80a608496f152524", "decimals":18, "minBidAmount":0.02},
 
-
+      "hyperNFT":{"name":"HyperNFT","address":"0xe3e9581a1a80db0f03e66baaa93231c35ab95025", "projectId": 0},
+    
 
       "buythefloor":{"address":"0x1fd534630e4e720c1a71c596aeb896faaa979f19"},
 
       "testsquiggles":{"name":"TestSquiggles","address":"0x7cea7e61f8be415bee361799f19644b9889713cd", "projectId": 0},
-      "hyperNFT":{"name":"HyperNFT","address":"0x68ab75f51cc1c4c038d7f79e2df5ce08229c3a82", "projectId": 0},
+     
       
 
       "artsale":{"name":"ArtSale","address":"0x39ec448b891c476e166b3c3242a90830db556661"},

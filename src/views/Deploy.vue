@@ -236,6 +236,7 @@ export default {
         artist:artistAddress,
         keypassToken:"0x0",
         uri:"0x0",
+        nonce:0,
         currencyToken:"0x0",
         currencyAmount:"0"
         
