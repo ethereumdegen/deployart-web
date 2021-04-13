@@ -7,7 +7,7 @@
      <div class=" ">
         <Navbar 
         v-bind:web3Plug="web3Plug"
-        v-bind:accessPlug="accessPlug"
+        
        />
      </div>
 
@@ -74,8 +74,7 @@
 
 
 
-import Web3Plug from '../js/web3-plug.js' 
-import AccessPlug from '../js/access-plug.js' 
+import Web3Plug from '../js/web3-plug.js'  
 
  
 import FrontPageMedia from './components/FrontPageMedia.vue';
@@ -96,14 +95,8 @@ export default {
   components: {Navbar, Footer, TabsBar, FrontPageMedia, AnimatedTextArea },
   data() {
     return {
-      web3Plug: new Web3Plug() ,
-      accessPlug: new AccessPlug() ,
-      activePanelId: null,
-      frontpageSampleCode: `This is some code {}
-      This is some code {}
-      This is some code {}
-      
-      `
+      web3Plug: new Web3Plug() , 
+      activePanelId: null, 
        
 
       
@@ -133,8 +126,7 @@ export default {
 
   },
   mounted: function () {
-         this.accessPlug.reconnect()
-   
+         
     
   }, 
   methods: {

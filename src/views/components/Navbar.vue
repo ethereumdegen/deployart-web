@@ -16,7 +16,7 @@
           
          <UpperNav
           v-bind:web3Plug="web3Plug"
-           v-bind:accessPlug="accessPlug"
+      
           />
        </div>
 
@@ -31,7 +31,7 @@
           <div class="text-sm lg:flex-grow">
              <AccordionNav 
              v-bind:web3Plug="web3Plug"
-              v-bind:accessPlug="accessPlug"
+             
              />
 
           </div>
@@ -53,7 +53,7 @@ import UpperNav from './UpperNav.vue';
 import AccordionNav from './AccordionNav.vue';
 export default {
   name: 'Navbar',
-  props: ['web3Plug', 'accessPlug'],
+  props: ['web3Plug' ],
   components: {UpperNav,AccordionNav},
   data() {
     return {

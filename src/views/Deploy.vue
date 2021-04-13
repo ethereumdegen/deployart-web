@@ -6,8 +6,7 @@
 
      <div class=" ">
         <Navbar 
-        v-bind:web3Plug="web3Plug"
-        v-bind:accessPlug="accessPlug"
+        v-bind:web3Plug="web3Plug" 
        />
      </div>
 
@@ -17,10 +16,10 @@
   
 
    <div class="section  bg-white border-b-2 border-black">
-     <div class="autospacing w-container">
+     <div class="py-16 w-container">
         
-       <div class="w-column">
-          <div class="text-lg font-bold"> Your Bids  </div>
+       <div class=" ">
+          <div class="text-lg font-bold mb-8"> Deploy an NFT  </div>
           
           <div  class=" " v-if="!connectedToWeb3">
               <NotConnectedToWeb3 />
@@ -31,11 +30,20 @@
              
             
 
-            <div v-if="selectedTab=='bids'" class="mb-4 ">
+          
 
+             <div class="mb-4 ">
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Art Name</label>
+
+              <div class="flex flex-row">
+              <div class="w-1/2 px-4">
+                    <input type="text"   v-model="formInputs.artName"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="my first work">
+                </div>
+
+               
+              </div>
            
-
-           </div>
+            </div>
 
 
           </div>
@@ -63,9 +71,7 @@
 
 import NotConnectedToWeb3 from './components/NotConnectedToWeb3.vue'
 
-import Web3Plug from '../js/web3-plug.js' 
-import AccessPlug from '../js/access-plug.js' 
-
+import Web3Plug from '../js/web3-plug.js'  
  
 
 import Navbar from './components/Navbar.vue';
@@ -83,11 +89,9 @@ export default {
   components: {Navbar, Footer, TabsBar, GenericTable, NotConnectedToWeb3},
   data() {
     return {
-      web3Plug: new Web3Plug() ,
-      accessPlug: new AccessPlug() ,
-      activePanelId: null,
-      selectedTab:"bids",
-      bidRowsArray:[],
+      web3Plug: new Web3Plug() , 
+  
+      formInputs:{},
 
        
       connectedToWeb3: false,
@@ -122,9 +126,7 @@ export default {
 
   },
   mounted: function () {
-    
-      this.accessPlug.reconnect()
-   
+     
   }, 
   methods: {
           
