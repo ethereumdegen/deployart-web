@@ -224,14 +224,27 @@ export default {
     async signForMint(){
       console.log('sign for mint')
 
+
+      let artistAddress = this.web3Plug.getActiveAccountAddress()
+
       let chainId = this.web3Plug.getActiveNetId()
-      let contractAddress = " "
-      let dataValues = [] 
+      let contractAddress = this.web3Plug.getContractDataForNetworkID(chainId)['hyperNFT'].address
+
+ 
+
+       let dataValues = {
+        artist:artistAddress,
+        keypassToken:"0x0",
+        uri:"0x0",
+        currencyToken:"0x0",
+        currencyAmount:"0"
+        
+      }
+
+      console.log('dataValues', dataValues)
 
 
-
-
-      let signResults = await EIP712Utils.performOffchainSignForBidPacket( chainId, contractAddress, eip712config, dataValues  )
+      let signResults = await EIP712Utils.performOffchainSignForBidPacket( chainId, contractAddress, eip712config, dataValues , artistAddress, this.web3Plug.getWeb3Instance() )
 
 
     }
