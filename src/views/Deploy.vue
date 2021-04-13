@@ -50,7 +50,7 @@
 
               <div class="flex flex-row">
               <div class="w-1/2  ">
-                    <input type="text"   v-model="formInputs.artName"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="ipfs://qradw112d2...">
+                    <input type="text"   v-model="formInputs.artURI"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="ipfs://qradw112d2...">
                 </div>
 
                
@@ -156,6 +156,9 @@ import TabsBar from './components/TabsBar.vue';
 import GenericTable from './components/GenericTable.vue';
 import GenericDropdown from './components/GenericDropdown.vue';
  
+import EIP712Utils from '../js/EIP712/EIP712Utils.js'
+
+const eip712config = require('../js/EIP712/eip712-config.json')
 
 import FrontendHelper from '../js/frontend-helper.js'
 
@@ -168,6 +171,10 @@ export default {
       web3Plug: new Web3Plug() , 
   
       formInputs:{},
+
+      currencyTokensOptionsList: [],
+      nftOptionsList: [],
+
 
        
       connectedToWeb3: false,
@@ -206,6 +213,28 @@ export default {
      
   }, 
   methods: {
+
+
+    onCurrencySelectCallback(){
+
+    },
+    onNFTSelectCallback(){
+
+    },
+    async signForMint(){
+      console.log('sign for mint')
+
+      let chainId = this.web3Plug.getActiveNetId()
+      let contractAddress = " "
+      let dataValues = [] 
+
+
+
+
+      let signResults = await EIP712Utils.performOffchainSignForBidPacket( chainId, contractAddress, eip712config, dataValues  )
+
+
+    }
           
   }
 }
