@@ -94,6 +94,20 @@
             </div>
 
 
+            <div class="mb-4 ">
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Max Copies</label>
+
+              <div class="flex flex-row">
+              <div class="w-1/2 ">
+                    <input type="number"   v-model="formInputs.maxCopies"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="0.00">
+                </div> 
+                 
+              </div>
+           
+            </div>
+
+
+
 
               <div class="mb-4">
                 <label   class="block text-md font-medium font-bold text-gray-800  ">Required NFT Held to Mint</label>
@@ -111,12 +125,10 @@
           </div>
 
            <div class="py-4" v-if=" connectedToWeb3 && !mintSubmitComplete">
-             
- 
- 
+              
  
                  <div class="  p-4">
-                     <div @click="signForMint" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Launch </div>
+                     <div @click="signForMint" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Launch NFT </div>
                 </div>
 
 
@@ -173,7 +185,7 @@ export default {
     return {
       web3Plug: new Web3Plug() , 
   
-      formInputs:{},
+      formInputs:{currencyAmountFormatted:0,artURI:"ipfs://",maxCopies:1},
 
       currencyTokensOptionsList: [],
       nftOptionsList: [],
@@ -215,20 +227,52 @@ export default {
   mounted: function () {
 
     let chainId = this.web3Plug.getActiveNetId()
-     
+    let contractData = this.web3Plug.getContractDataForNetworkID(chainId)
+ 
 
-    this.currencyTokensOptionsList = this.web3Plug.getCurrencyTokensForNetworkID(chainId)
-    this.nftOptionsList = this.web3Plug.getNFTTypesForNetworkID(chainId)
+    let currencyTypesArray = this.web3Plug.getCurrencyTokensForNetworkID(chainId)
+   
+      this.currencyTokensOptionsList = [{"name":"none","label":"None" } ].concat( currencyTypesArray  )
     
+    
+    let nftTypesArray =   this.web3Plug.getNFTTypesForNetworkID(chainId)  
+   
+
+     this.nftOptionsList = [{"name":"any","label":"Any" } ].concat( nftTypesArray  )
+
+
   }, 
   methods: {
 
 
-    onCurrencySelectCallback(){
+    onCurrencySelectCallback(selectedItem){
+      let assetName = selectedItem.name 
 
+      let chainId = this.web3Plug.getActiveNetId()
+      let contractData = this.web3Plug.getContractDataForNetworkID(chainId)[assetName]
+       
+
+      if(contractData){
+         
+        this.formInputs.selectedCurrency = contractData.address
+      }else{
+        this.formInputs.selectedCurrency = "0x0000000000000000000000000000000000000000"
+
+      }
+ 
     },
-    onNFTSelectCallback(){
+    onNFTSelectCallback( selectedItem ){
+       let assetName = selectedItem.name 
 
+      let chainId = this.web3Plug.getActiveNetId()
+      let contractData = this.web3Plug.getContractDataForNetworkID(chainId)[assetName]
+
+      if(contractData){
+        this.formInputs.selectedNFT = contractData.address
+      }else{
+        this.formInputs.selectedNFT = "0x0000000000000000000000000000000000000000"
+      }
+ 
     },
     async signForMint(){
       console.log('sign for mint')
@@ -247,11 +291,11 @@ export default {
 
        let dataValues = {
         artist:artistAddress,
-        keypassToken:"0x0000000000000000000000000000000000000000",
+        keypassToken: this.formInputs.selectedNFT ,
         uri: artURI,
-        maxCopies:1,
+        maxCopies: parseInt( this.formInputs.maxCopies ),
         expirationBlock: 0,
-        currencyToken:"0x0000000000000000000000000000000000000000",
+        currencyToken:  this.formInputs.selectedCurrency ,
         currencyAmount: currencyAmountRaw
         
       }  
@@ -268,6 +312,8 @@ export default {
 
       let args = Object.values( dataValues )
       args.push(signature)
+
+      console.log('minterAddress',minterAddress)
 
       let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
     }
