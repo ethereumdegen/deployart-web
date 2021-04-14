@@ -3,8 +3,8 @@ const config={
   "dropdowns":[
     {"title":"Navigation","rows":[
       {"title":"Home","url":"/"},    
-      {"title":"Official Docs","url":"https://docs.starflask.com"},   
-      {"title":"Dashboard","url":"/dashboard"} 
+      {"title":"Official Docs","url":"https://docs.deploy.art"},   
+      {"title":"Deploy an NFT","url":"/deploy"} 
     ]}  
   ]
 

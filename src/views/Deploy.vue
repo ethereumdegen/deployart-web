@@ -60,40 +60,6 @@
 
 
 
-                <div class="mb-4">
-                <label   class="block text-md font-medium font-bold text-gray-800  ">Purchase Currency Token</label>
-                
-
-                <div class="flex flex-row">
-
-                <GenericDropdown
-                  v-bind:optionList="currencyTokensOptionsList" 
-                  v-bind:onSelectCallback="onCurrencySelectCallback"
-                />
-                  <div class="mb-4 p-4 ml-8" v-if="formInputs.tokenContractAddress">
-                    Balance: {{ getSelectedCurrencyBalanceFormatted() }}
-                </div>
-                </div>
-
-
-            </div>
-
-            
-
-              
-           <div class="mb-4 ">
-              <label   class="block text-md font-medium font-bold text-gray-800  ">Purchase Currency Amount</label>
-
-              <div class="flex flex-row">
-              <div class="w-1/2 ">
-                    <input type="number"   v-model="formInputs.currencyAmountFormatted"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="0.00">
-                </div> 
-                 
-              </div>
-           
-            </div>
-
-
             <div class="mb-4 ">
               <label   class="block text-md font-medium font-bold text-gray-800  ">Max Copies</label>
 
@@ -105,6 +71,42 @@
               </div>
            
             </div>
+
+
+
+
+
+                <div class="mb-4">
+                <label   class="block text-md font-medium font-bold text-gray-800  "> Currency Token</label>
+                
+
+                <div class="flex flex-row">
+
+                <GenericDropdown
+                  v-bind:optionList="currencyTokensOptionsList" 
+                  v-bind:onSelectCallback="onCurrencySelectCallback"
+                />
+                   
+                </div>
+
+
+            </div>
+
+            
+
+              
+           <div class="mb-4 " :class=" { 'hidden':  currencyIsSelected()  } " >
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Price To Mint (currency token)</label>
+
+              <div class="flex flex-row">
+              <div class="w-1/2 ">
+                    <input type="number"   v-model="formInputs.currencyAmountFormatted"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="0.00">
+                </div> 
+                 
+              </div>
+           
+            </div>
+
 
 
 
@@ -254,12 +256,14 @@ export default {
 
       if(contractData){
          
-        this.formInputs.selectedCurrency = contractData.address
+        this.formInputs.selectedCurrency = contractData 
       }else{
-        this.formInputs.selectedCurrency = "0x0000000000000000000000000000000000000000"
+        this.formInputs.selectedCurrency = {"name":"none","label":"None","address": "0x0000000000000000000000000000000000000000" } 
 
       }
- 
+
+
+    this.$forceUpdate();  
     },
     onNFTSelectCallback( selectedItem ){
        let assetName = selectedItem.name 
@@ -272,7 +276,7 @@ export default {
       }else{
         this.formInputs.selectedNFT = "0x0000000000000000000000000000000000000000"
       }
- 
+    this.$forceUpdate();  
     },
     async signForMint(){
       console.log('sign for mint')
@@ -295,7 +299,7 @@ export default {
         uri: artURI,
         maxCopies: parseInt( this.formInputs.maxCopies ),
         expirationBlock: 0,
-        currencyToken:  this.formInputs.selectedCurrency ,
+        currencyToken:  this.formInputs.selectedCurrency.address ,
         currencyAmount: currencyAmountRaw
         
       }  
@@ -316,6 +320,12 @@ export default {
       console.log('minterAddress',minterAddress)
 
       let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
+    },
+
+    currencyIsSelected(){
+      let result =  this.formInputs.selectedCurrency && this.formInputs.selectedCurrency.name != 'none'
+
+      console.log('currencyIsSelected',result)
     }
           
   }
