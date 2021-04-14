@@ -86,7 +86,7 @@
 
               <div class="flex flex-row">
               <div class="w-1/2 ">
-                    <input type="number"   v-model="formInputs.tokenBidAmountFormatted"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="0.00">
+                    <input type="number"   v-model="formInputs.currencyAmountFormatted"  class="text-gray-900 border-2 border-black font-bold px-4 text-xl focus:ring-indigo-500 focus:border-indigo-500 block w-full py-4 pl-7 pr-12   border-gray-300 rounded-md" placeholder="0.00">
                 </div> 
                  
               </div>
@@ -147,6 +147,7 @@
 import NotConnectedToWeb3 from './components/NotConnectedToWeb3.vue'
 
 import Web3Plug from '../js/web3-plug.js'  
+ import MathHelper from '../js/math-helper.js'  
  
 
 import Navbar from './components/Navbar.vue';
@@ -159,6 +160,8 @@ import GenericDropdown from './components/GenericDropdown.vue';
 import EIP712Utils from '../js/EIP712/EIP712Utils.js'
 
 const eip712config = require('../js/EIP712/eip712-config.json')
+
+const DigitalNFTABI = require('../contracts/DigitalNFT.json')
 
 import FrontendHelper from '../js/frontend-helper.js'
 
@@ -230,24 +233,37 @@ export default {
       let chainId = this.web3Plug.getActiveNetId()
       let contractAddress = this.web3Plug.getContractDataForNetworkID(chainId)['digitalNFT'].address
 
- 
+      let artURI = this.formInputs.artURI
+
+      let currencyDecimals  = 8 
+       let currencyAmountRaw = MathHelper.formattedAmountToRaw(this.formInputs.currencyAmountFormatted,currencyDecimals) 
+
 
        let dataValues = {
         artist:artistAddress,
-        keypassToken:"0x0",
-        uri:"0x0",
-        nonce:0,
-        currencyToken:"0x0",
-        currencyAmount:"0"
+        keypassToken:"0x0000000000000000000000000000000000000000",
+        uri: artURI,
+        maxCopies:1,
+        expirationBlock: 0,
+        currencyToken:"0x0000000000000000000000000000000000000000",
+        currencyAmount: currencyAmountRaw
         
-      }
+      }  
 
       console.log('dataValues', dataValues)
 
 
       let signResults = await EIP712Utils.performOffchainSignForBidPacket( chainId, contractAddress, eip712config, dataValues , artistAddress, this.web3Plug.getWeb3Instance() )
+       let signature = signResults.signature
 
+      let nftContract = this.web3Plug.getCustomContract( DigitalNFTABI, contractAddress );
 
+      let minterAddress = this.web3Plug.getActiveAccountAddress()
+
+      let args = Object.values( dataValues )
+      args.push(signature)
+
+      let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
     }
           
   }

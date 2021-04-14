@@ -1,4 +1,4 @@
-# HyperNFT  
+# Deploy.Art  
  
 Web frontend for NFT Minting 
  

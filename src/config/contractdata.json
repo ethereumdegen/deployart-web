@@ -24,7 +24,7 @@
  
       "weth":{"name":"wEth","address":"0xf5e7aa9fd045ce55c68f9a4f80a608496f152524", "decimals":18, "minBidAmount":0.02},
 
-      "digitalNFT":{"name":"digitalNFT","address":"0xf08803be700383b06fc905d31126642863d00391", "projectId": 0},
+      "digitalNFT":{"name":"digitalNFT","address":"0xc2aa499626310432f1ab305ee3bbb774e0da0eb1", "projectId": 0},
     
 
       "buythefloor":{"address":"0x1fd534630e4e720c1a71c596aeb896faaa979f19"},
