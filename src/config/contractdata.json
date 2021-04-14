@@ -1,5 +1,9 @@
 {
   "mainnet":{
+    "currencyTokens": [{"name":"weth","label":"wEth"},
+      {"name":"0xbitcoin","label":"0xBTC"}] ,
+
+
     "contracts":{
       "0xbitcoin":{"name":"0xBTC","address":"0xb6ed7644c69416d67b522e20bc294a9a9b405b31","decimals":8,"minBidAmount":1},
  
@@ -19,6 +23,12 @@
 
   },
   "goerli":{
+    "currencyTokens": [{"name":"weth","label":"wEth"},
+      {"name":"0xbitcoin","label":"0xBTC"}] ,
+
+    "nftTypes": [{"name":"any","label":"any", "address":"0x0000000000000000000000000000000000000000"},
+      {"name":"digitaltoast","label":"Digital Toast", "address": "0x9b2214d749f736873b2232a54889342610878651" }] ,
+
     "contracts":{
       "0xbitcoin":{"name":"0xBTC","address":"0xab89a7742cb10e7bce98540fd05c7d731839cf9f","decimals":8,"minBidAmount":1},
  

@@ -213,7 +213,13 @@ export default {
 
   },
   mounted: function () {
+
+    let chainId = this.web3Plug.getActiveNetId()
      
+
+    this.currencyTokensOptionsList = this.web3Plug.getCurrencyTokensForNetworkID(chainId)
+    this.nftOptionsList = this.web3Plug.getNFTTypesForNetworkID(chainId)
+    
   }, 
   methods: {
 

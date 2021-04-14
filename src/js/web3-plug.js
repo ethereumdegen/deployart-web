@@ -20,6 +20,7 @@ import BigNumber from 'bignumber.js'
 const contractData = require('../config/contractdata.json')
 const tokenContractABI = require('../contracts/ERC20ABI')
 const nftContractABI = require('../contracts/ERC721ABI')
+ 
 
 const EventEmitter = require('events');
 class Web3PlugEmitter extends EventEmitter {}
@@ -227,6 +228,32 @@ export default class Web3Plug {
   }
 
 
+
+    getCurrencyTokensForNetworkID(networkId ){
+    
+      let netName = this.getWeb3NetworkName(networkId)
+
+      if(netName){
+          return contractData[netName].currencyTokens
+      }
+  
+      return undefined
+  
+
+    }
+
+    getNFTTypesForNetworkID(networkId ){
+    
+      let netName = this.getWeb3NetworkName(networkId)
+
+      if(netName){
+          return contractData[netName].nftTypes
+      }
+  
+      return undefined
+  
+
+    }
 
   async getConnectedAccounts()
   {
