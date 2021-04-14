@@ -1,4 +1,4 @@
-{   "contractName":"HyperNFT",
+{   "contractName":"DigitalNFT",
     "version":"1",
     "primaryType":"MintPacket",
     "entries":{
@@ -6,7 +6,10 @@
         "artist":"address",
         "keypassToken":"address",
         "uri":"string",
-        "nonce":"uint256",
+        "maxCopies":"uint256",
+        "expirationBlock":"uint256",
+        
+
         "currencyToken":"address",
         "currencyAmount":"uint256"
         

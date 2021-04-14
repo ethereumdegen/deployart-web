@@ -228,7 +228,7 @@ export default {
       let artistAddress = this.web3Plug.getActiveAccountAddress()
 
       let chainId = this.web3Plug.getActiveNetId()
-      let contractAddress = this.web3Plug.getContractDataForNetworkID(chainId)['hyperNFT'].address
+      let contractAddress = this.web3Plug.getContractDataForNetworkID(chainId)['digitalNFT'].address
 
  
 
