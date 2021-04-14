@@ -319,7 +319,14 @@ export default {
 
       console.log('minterAddress',minterAddress)
 
-      let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
+
+      //send this data up to the server in a broadcast !!! 
+
+      // then it will show up in the gallery of possible NFTs to mint !! 
+
+      //allow people to register their eth address to a name by offchain sign 
+
+      //let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
     },
 
     currencyIsSelected(){
