@@ -130,8 +130,29 @@
               
  
                  <div class="  p-4">
-                     <div @click="signForMint" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Launch NFT </div>
+                     <div @click="signForMint" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Define NFT </div>
                 </div>
+
+
+          </div>
+
+
+         <div class="py-4" v-if=" connectedToWeb3 && mintSubmitComplete">
+              
+              <div> NFT Definition Data </div>
+                 <div class="  p-4  ">
+                  <TextArea v-html="definedNFTJSON" class="text-black w-full border-2 border-black p-2" rows="9" disabled/> 
+                </div>
+
+
+                  <div class="  p-4">
+                     <div @click="copyDefinition" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Definition </div>
+                </div>
+
+            <div class="  p-4">
+                     <div @click="resetForm" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Reset </div>
+                </div>
+
 
 
           </div>
@@ -196,7 +217,9 @@ export default {
        
       connectedToWeb3: false,
       currentBlockNumber: 0,
-      mintSubmitComplete:false
+      mintSubmitComplete:false,
+
+      definedNFTJSON:""
     }
   },
 
@@ -258,7 +281,7 @@ export default {
          
         this.formInputs.selectedCurrency = contractData 
       }else{
-        this.formInputs.selectedCurrency = {"name":"none","label":"None","address": "0x0000000000000000000000000000000000000000" } 
+        this.formInputs.selectedCurrency = {"name":"none","label":"None","address": "0x0000000000000000000000000000000000000000", "decimals": 8 } 
 
       }
 
@@ -289,9 +312,12 @@ export default {
 
       let artURI = this.formInputs.artURI
 
-      let currencyDecimals  = 8 
-       let currencyAmountRaw = MathHelper.formattedAmountToRaw(this.formInputs.currencyAmountFormatted,currencyDecimals) 
-
+    
+       
+        let currencyDecimals  = this.formInputs.selectedCurrency.decimals 
+        let currencyAmountRaw = MathHelper.formattedAmountToRaw(this.formInputs.currencyAmountFormatted,currencyDecimals) 
+ 
+     
 
        let dataValues = {
         artist:artistAddress,
@@ -319,6 +345,16 @@ export default {
 
       console.log('minterAddress',minterAddress)
 
+      this.mintSubmitComplete=true
+
+
+      dataValues.signature = signature 
+
+
+      this.definedNFTJSON = JSON.stringify( dataValues  )
+
+     console.log('definedNFTJSON',this.definedNFTJSON)
+
 
       //send this data up to the server in a broadcast !!! 
 
@@ -333,6 +369,17 @@ export default {
       let result =  this.formInputs.selectedCurrency && this.formInputs.selectedCurrency.name != 'none'
 
       console.log('currencyIsSelected',result)
+    },
+
+    copyDefinition(){
+
+      this.$clipboard(this.definedNFTJSON);
+      alert("Copied to clipboard");
+
+    },
+
+    resetForm(){
+        this.mintSubmitComplete=false
     }
           
   }

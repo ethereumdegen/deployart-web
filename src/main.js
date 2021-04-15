@@ -2,7 +2,8 @@ import Vue from 'vue'
 import VueTailwind from 'vue-tailwind'
 import App from './App.vue'
 import router from './router'
-  
+import Clipboard from 'v-clipboard'
+
 
 //import "tailwindcss/tailwind.css"
 
@@ -42,6 +43,8 @@ const settings = {
 }
 
 Vue.use(VueTailwind, settings)
+
+Vue.use(Clipboard)
 
 new Vue({
   router,

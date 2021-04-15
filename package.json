@@ -33,6 +33,7 @@
     "socket.io-client": "^3.1.1",
     "tailwindcss": "^1.0.0-beta.4",
     "tinyfox": "^0.13.3",
+    "v-clipboard": "^2.2.3",
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vue-tailwind": "^1.2.6",
