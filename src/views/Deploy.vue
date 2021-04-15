@@ -126,7 +126,7 @@
 
           </div>
 
-           <div class="py-4" v-if=" connectedToWeb3 && !mintSubmitComplete">
+           <div class="py-4" v-if=" connectedToWeb3 && !submitComplete">
               
  
                  <div class="  p-4">
@@ -137,7 +137,7 @@
           </div>
 
 
-         <div class="py-4" v-if=" connectedToWeb3 && mintSubmitComplete">
+         <div class="py-4" v-if=" connectedToWeb3 && submitComplete">
               
               <div> NFT Definition Data </div>
                  <div class="  p-4  ">
@@ -217,7 +217,7 @@ export default {
        
       connectedToWeb3: false,
       currentBlockNumber: 0,
-      mintSubmitComplete:false,
+      submitComplete:false,
 
       definedNFTJSON:""
     }
@@ -345,7 +345,7 @@ export default {
 
       console.log('minterAddress',minterAddress)
 
-      this.mintSubmitComplete=true
+      this.submitComplete=true
 
 
       dataValues.signature = signature 
@@ -379,7 +379,7 @@ export default {
     },
 
     resetForm(){
-        this.mintSubmitComplete=false
+        this.submitComplete=false
     }
           
   }
