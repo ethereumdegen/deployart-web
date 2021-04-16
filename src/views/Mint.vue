@@ -60,7 +60,7 @@
                             
                           <div> Artist:  {{nftDefinition.artist}}</div>
                           
-                          <div> Art URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
+                          <div> Token URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
 
                             <div> Max Copies:  {{nftDefinition.maxCopies}}</div> 
 
