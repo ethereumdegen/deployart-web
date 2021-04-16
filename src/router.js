@@ -7,7 +7,7 @@ import Home from './views/Home.vue'
 
 import Dashboard from './views/Dashboard.vue'
 
-import Deploy from './views/Deploy.vue'
+import Define from './views/Define.vue'
  
 import Mint from './views/Mint.vue'
  
@@ -34,9 +34,9 @@ export default new Router({
     } ,
 
     {
-      path: '/deploy',
-      name: 'deploy',
-      component: Deploy
+      path: '/define',
+      name: 'define',
+      component: Define
     } ,
 
     {

@@ -8,6 +8,7 @@ const env = process.env.NODE_ENV
 
 const clientConfig = require('../config/clientConfig.json')[env]
  
+const contractDataLookup = require('../config/generated/contractlookup.json')
 
 export default class FrontendHelper {
 
@@ -79,6 +80,23 @@ export default class FrontendHelper {
  
         return clientConfig.external_routes[dest]
       
+
+    }
+
+    static findContractDataFromAddress(contractAddress, chainId){
+
+        contractAddress = contractAddress.toLowerCase()
+
+        if(contractAddress == "0x0000000000000000000000000000000000000000"){
+            return {"name": "None", "address": contractAddress , 'isNull': true}
+        }
+
+        let networkName = 'mainnet'
+
+        if(chainId == 5) networkName = 'goerli';
+
+        return contractDataLookup[networkName][contractAddress]['0']
+
 
     }
 

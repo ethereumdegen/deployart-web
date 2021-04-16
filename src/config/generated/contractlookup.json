@@ -1,0 +1,48 @@
+{
+  "mainnet": {
+    "0xb6ed7644c69416d67b522e20bc294a9a9b405b31": {
+      "0": {
+        "name": "0xBTC",
+        "address": "0xb6ed7644c69416d67b522e20bc294a9a9b405b31",
+        "decimals": 8,
+        "minBidAmount": 1
+      }
+    },
+    "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": {
+      "0": {
+        "name": "wEth",
+        "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "decimals": 18,
+        "minBidAmount": 0.02
+      }
+    },
+    " ": { "0": { "name": "digitalNFT", "address": " ", "projectId": 0 } },
+    "0x9b2214d749f736873b2232a54889342610878651": { "0": { "name": "DigitalToast", "address": "0x9b2214d749f736873b2232a54889342610878651" } }
+  },
+  "goerli": {
+    "0xab89a7742cb10e7bce98540fd05c7d731839cf9f": {
+      "0": {
+        "name": "0xBTC",
+        "address": "0xab89a7742cb10e7bce98540fd05c7d731839cf9f",
+        "decimals": 8,
+        "minBidAmount": 1
+      }
+    },
+    "0xf5e7aa9fd045ce55c68f9a4f80a608496f152524": {
+      "0": {
+        "name": "wEth",
+        "address": "0xf5e7aa9fd045ce55c68f9a4f80a608496f152524",
+        "decimals": 18,
+        "minBidAmount": 0.02
+      }
+    },
+    "0xd75f0b9aaecf308c0ae28003e708b9c0790a801b": {
+      "0": {
+        "name": "digitalNFT",
+        "address": "0xd75f0b9aaecf308c0ae28003e708b9c0790a801b",
+        "projectId": 0
+      }
+    },
+    "0x22a320b7a80d249a109dcfc7ba74c1059b008604": { "0": { "name": "DigitalToast", "address": "0x22a320b7a80d249a109dcfc7ba74c1059b008604" } }
+  }
+}

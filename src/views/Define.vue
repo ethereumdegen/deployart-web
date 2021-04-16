@@ -19,7 +19,7 @@
      <div class="py-16 w-container">
         
        <div class=" ">
-          <div class="text-lg font-bold mb-8"> Deploy an NFT  </div>
+          <div class="text-lg font-bold mb-8"> Define an NFT  </div>
           
           <div  class=" " v-if="!connectedToWeb3">
               <NotConnectedToWeb3 />
@@ -82,7 +82,7 @@
 
                 <div class="flex flex-row">
 
-                <GenericDropdown
+                <GenericDropdown v-if="currencyTokensOptionsList"
                   v-bind:optionList="currencyTokensOptionsList" 
                   v-bind:onSelectCallback="onCurrencySelectCallback"
                 />
@@ -201,7 +201,7 @@ const DigitalNFTABI = require('../contracts/DigitalNFT.json')
 import FrontendHelper from '../js/frontend-helper.js'
 
 export default {
-  name: 'Deploy',
+  name: 'Define',
   props: [],
   components: {Navbar, Footer, TabsBar, GenericTable, GenericDropdown,NotConnectedToWeb3},
   data() {
@@ -246,14 +246,19 @@ export default {
 
       this.web3Plug.reconnectWeb()
     
- 
+  
+
+  
+
+
 
   },
   mounted: function () {
 
     let chainId = this.web3Plug.getActiveNetId()
     let contractData = this.web3Plug.getContractDataForNetworkID(chainId)
- 
+  
+      if(!chainId)chainId =1;
 
     let currencyTypesArray = this.web3Plug.getCurrencyTokensForNetworkID(chainId)
    
@@ -362,7 +367,7 @@ export default {
 
       //allow people to register their eth address to a name by offchain sign 
 
-      //let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
+    //  let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
     },
 
     currencyIsSelected(){

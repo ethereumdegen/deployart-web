@@ -50,45 +50,76 @@
              
         <div  class=" px-4" v-if=" hasDefinition">
 
+            <div class="border-2 border-black p-4 rounded ">
+                <div class="mb-4" >
+              <label   class="block text-md font-medium font-bold text-gray-800  ">NFT Definition</label>
+                    
+                  <div> Artist:  {{nftDefinition.artist}}</div>
+                  
+                  <div> Art URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
 
+                    <div> Max Copies:  {{nftDefinition.maxCopies}}</div>
+                  
 
-          <div class="mb-4">
-                <label   class="block text-md font-medium font-bold text-gray-800  "> Approve Tokens </label>
-                
-
-                <div class="flex flex-row">
-
-             
                 </div>
 
 
-            </div>
 
-             
+              <div class="mb-4" v-if="!this.currencyTokenContractData.isNull" >
+                    <label   class="block text-md font-medium font-bold text-gray-800  "> Cost to Mint NFT (paid to artist) </label>
+                    
 
-             <div class="mb-4">
-                <label   class="block text-md font-medium font-bold text-gray-800  ">Required NFT Held to Mint</label>
+                    <div class="flex flex-col">
+
+                      
+
+                    
+                     
+
+                        <div> Cost:  {{this.currencyTokenContractData.currencyAmountFormatted}} {{this.currencyTokenContractData.name}} </div>
+                         <div class="hidden"> Currency Address:  {{this.currencyTokenContractData.address}} </div>
+
+                      <div class="  p-4" v-if="approveButtonIsVisible()">
+                            <div @click="approveCurrencyToken" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Approve </div>
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
                 
-                
-            </div>
 
+              <div class="mb-4" v-if="!this.requiredNFTData.isNull">
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Required NFT Held to Mint</label>
+                    
+                  <div> NFT:  {{this.requiredNFTData.name}}</div>
+                  <div> Address:  {{this.requiredNFTData.address}} </div>
 
-          <div class="py-4" v-if="!mintSubmitComplete">
-              
- 
-                 <div class="  p-4">
-                     <div @click="mintToken" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Define NFT </div>
                 </div>
 
 
-          </div>
+              <div class="py-4" v-if="!mintSubmitComplete">
+                  
+    
+                    <div class="  p-4">
+                        <div @click="mintToken" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Mint NFT </div>
+                    </div>
 
 
-         <div class="py-4" v-if=" mintSubmitComplete">
-              
-             <div> The art has been deployed! Enjoy. </div>
+              </div>
 
-             
+
+            <div class="py-4" v-if=" mintSubmitComplete">
+                  
+                <div> The art has been deployed! Enjoy. </div>
+
+                
+
+              </div>
+
+
 
           </div>
 
@@ -154,6 +185,9 @@ const DigitalNFTABI = require('../contracts/DigitalNFT.json')
 
 import FrontendHelper from '../js/frontend-helper.js'
 
+
+var balanceTimer; 
+
 export default {
   name: 'Deploy',
   props: [],
@@ -162,11 +196,13 @@ export default {
     return {
       web3Plug: new Web3Plug() , 
   
-      formInputs:{currencyAmountFormatted:0,artURI:"ipfs://",maxCopies:1},
+      formInputs:{ },
 
       hasDefinition: false, 
       pastedNFTDefinition: "",
+
       nftDefinition: null,
+      parsedNFTDefinition: null,
        
       connectedToWeb3: false,
      
@@ -198,8 +234,9 @@ export default {
       }.bind(this));
 
       this.web3Plug.reconnectWeb()
-    
- 
+
+      
+      balanceTimer = setInterval(this.updateBalances, 8000);
 
   },
   mounted: function () {
@@ -220,16 +257,76 @@ export default {
 
 
   }, 
+
+  beforeDestroy(){
+      clearInterval(balanceTimer)
+
+  },
   methods: {
 
     async readPastedDefinition(){
       console.log('read ',  this.pastedNFTDefinition)
 
       if(this.pastedNFTDefinition){
-        this.nftDefinition =  this.pastedNFTDefinition; 
+        this.nftDefinition =  JSON.parse(this.pastedNFTDefinition)  
         this.hasDefinition = true; 
+
+      
       }
 
+      let parsedDefinition = this.nftDefinition
+
+      let chainId = this.web3Plug.getActiveNetId()
+
+      this.currencyTokenContractData = FrontendHelper.findContractDataFromAddress(parsedDefinition.currencyToken,chainId)
+
+      if(!this.currencyTokenContractData.isNull){
+        this.currencyTokenContractData.currencyAmountFormatted = MathHelper.rawAmountToFormatted(  parsedDefinition.currencyAmount ,this.currencyTokenContractData.decimals  )
+      }
+
+      this.requiredNFTData = FrontendHelper.findContractDataFromAddress(parsedDefinition.keypassToken,chainId)
+
+        this.updateBalances()
+
+    },
+
+
+    async updateBalances(){ 
+      console.log("update balances")
+
+      if(this.nftDefinition){
+
+
+       let minterAddress = this.web3Plug.getActiveAccountAddress()
+
+        let chainId = this.web3Plug.getActiveNetId()
+
+        let nftContractAddress  =  this.web3Plug.getContractDataForNetworkID(chainId)['digitalNFT'].address
+        
+
+
+       let tokenAddress = this.nftDefinition.currencyToken
+      //  let amount = parseInt( parsedDefinition.currencyAmount ) 
+
+       let tokenContract = this.web3Plug.getTokenContract( tokenAddress );
+
+       let spender = nftContractAddress
+
+       if( !this.currencyTokenContractData || this.currencyTokenContractData.isNull){
+         return
+       }
+
+       let allowance = await tokenContract.methods.allowance(minterAddress,spender ).call({from:minterAddress})
+
+       this.currencyTokenAllowance = parseInt(allowance)
+        console.log('this.currencyTokenAllowance',this.currencyTokenAllowance ,  this.nftDefinition.currencyAmount )
+
+      }
+
+    },
+
+    approveButtonIsVisible(){
+      return (this.currencyTokenAllowance == 0)
     },
 
 
@@ -241,7 +338,7 @@ export default {
       let chainId = this.web3Plug.getActiveNetId()
       let contractAddress = this.web3Plug.getContractDataForNetworkID(chainId)['digitalNFT'].address
 
-        let parsedDefinition = JSON.parse(  this.nftDefinition  )
+        let parsedDefinition = this.nftDefinition
 
         console.log('parsed Definition', parsedDefinition  )
 
@@ -273,33 +370,49 @@ export default {
       console.log('minterAddress',minterAddress)
 
 
-      let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
+      nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress }).then((value) => {
+            console.log('response',value)
 
+           this.mintSubmitComplete=true
 
+        })
+        .catch((error) => {
+          console.error("Rejected!", error);
+        })
 
-      this.mintSubmitComplete=true
+   
  
+  
 
-
-      //send this data up to the server in a broadcast !!! 
-
-      // then it will show up in the gallery of possible NFTs to mint !! 
-
-      //allow people to register their eth address to a name by offchain sign 
-
-      //let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
+     
     },
 
-    currencyIsSelected(){
-      let result =  this.formInputs.selectedCurrency && this.formInputs.selectedCurrency.name != 'none'
+     
+     
 
-      console.log('currencyIsSelected',result)
-    },
 
-    copyDefinition(){
+    async approveCurrencyToken(){
+       console.log('approve currency token ')
 
-      this.$clipboard(this.definedNFTJSON);
-      alert("Copied to clipboard");
+      let approveAmount = "1000000000000000000000000000"
+  
+      let minterAddress = this.web3Plug.getActiveAccountAddress()
+
+      let chainId = this.web3Plug.getActiveNetId()
+
+      let nftContractAddress  =  this.web3Plug.getContractDataForNetworkID(chainId)['digitalNFT'].address
+       
+
+       let parsedDefinition = this.nftDefinition
+
+      let tokenAddress = parsedDefinition.currencyToken
+     // let amount = parsedDefinition.currencyAmount
+
+       let tokenContract = this.web3Plug.getTokenContract( tokenAddress );
+
+       let spender = nftContractAddress
+
+       let response = await tokenContract.methods.approve(spender,approveAmount).send({from:minterAddress})
 
     },
 
@@ -307,6 +420,15 @@ export default {
 
         this.hasDefinition = false
         this.mintSubmitComplete=false
+    },
+
+    getCloudflareIPFSURL(hash){
+      if(hash.includes("://")){
+        hash = hash.split('://')[1]
+      }
+
+      return `https://cloudflare-ipfs.com/ipfs/${hash}`
+
     }
           
   }
