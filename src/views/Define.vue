@@ -46,7 +46,7 @@
             </div>
 
             <div class="mb-4  ">
-              <label   class="block text-md font-medium font-bold text-gray-800  ">Token Metadata IPFS Hash</label>
+              <label   class="block text-md font-medium font-bold text-gray-800  ">Token Metadata IPFS Hash <a href="https://docs.deploy.art/ipfs-uri" target="_blank">[help]</a></label>
 
               <div class="flex flex-row">
               <div class="w-1/2  ">
