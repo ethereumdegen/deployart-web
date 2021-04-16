@@ -22,11 +22,9 @@
           <div class="text-lg font-bold mb-4"> Mint an NFT  </div>
            <div class="  mb-8"> Use NFT definition data that was cryptographically signed by the artist to deploy the work on-chain.  </div>
          
-          <div  class=" " v-if="!connectedToWeb3">
-              <NotConnectedToWeb3 />
-          </div>
+       
 
-          <div  class=" px-4" v-if=" connectedToWeb3">
+          <div  class=" px-4"  >
 
               
           
@@ -76,7 +74,7 @@
               </div>
 
 
-              <div class="mb-4" v-if="!this.currencyTokenContractData.isNull" >
+              <div class="mb-4" v-if="!this.currencyTokenContractData.isNull && connectedToWeb3" >
                     <label   class="block text-md font-medium font-bold text-gray-800  "> Cost to Mint NFT (paid to artist) </label>
                     
 
@@ -102,7 +100,7 @@
 
                 
 
-              <div class="mb-4" v-if="!this.requiredNFTData.isNull">
+              <div class="mb-4" v-if="!this.requiredNFTData.isNull && connectedToWeb3">
               <label   class="block text-md font-medium font-bold text-gray-800  ">Required NFT Held to Mint</label>
                     
                   <div> NFT:  {{this.requiredNFTData.name}}</div>
@@ -111,7 +109,7 @@
                 </div>
 
 
-              <div class="py-4" v-if="!mintSubmitComplete">
+              <div class="py-4" v-if="!mintSubmitComplete && connectedToWeb3">
                   
     
                     <div class="  p-4">
@@ -132,6 +130,11 @@
 
 
 
+          </div>
+
+
+          <div  class=" mt-8 " v-if="!connectedToWeb3">
+              <NotConnectedToWeb3 />
           </div>
 
           <div class="  p-4">
