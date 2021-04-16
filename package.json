@@ -1,7 +1,7 @@
 {
-  "name": "hyper-nft-web",
+  "name": "deployart-web",
   "description": "Gasless NFT Creation",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "postcss": {
     "plugins": {
