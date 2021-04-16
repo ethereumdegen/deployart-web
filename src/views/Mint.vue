@@ -320,7 +320,9 @@ export default {
 
        this.currencyTokenAllowance = parseInt(allowance)
         console.log('this.currencyTokenAllowance',this.currencyTokenAllowance ,  this.nftDefinition.currencyAmount )
-
+     
+     
+        this.$forceUpdate(); 
       }
 
     },
