@@ -51,18 +51,29 @@
         <div  class=" px-4" v-if=" hasDefinition">
 
             <div class="border-2 border-black p-4 rounded ">
-                <div class="mb-4" >
-              <label   class="block text-md font-medium font-bold text-gray-800  ">NFT Definition</label>
-                    
-                  <div> Artist:  {{nftDefinition.artist}}</div>
-                  
-                  <div> Art URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
 
-                    <div> Max Copies:  {{nftDefinition.maxCopies}}</div>
-                  
 
-                </div>
 
+               <div class="w-full mb-4 lg:flex lg:flex-row">  
+
+                    <div class="lg:w-2/3 text-sm" > 
+                
+                        <label   class="block text-md font-medium font-bold text-gray-800  ">NFT Definition</label>
+                            
+                          <div> Artist:  {{nftDefinition.artist}}</div>
+                          
+                          <div> Art URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
+
+                            <div> Max Copies:  {{nftDefinition.maxCopies}}</div> 
+
+                    </div>
+
+                       <div class="lg:w-1/3 text-center" > 
+                        <div class="m-2 p-2 border-black border-2 w-1/2 lg:w-full" style="margin: auto;">
+                         <img v-bind:src="getAssetImageSource()" class=" w-full"  />
+                        </div>
+                    </div>
+              </div>
 
 
               <div class="mb-4" v-if="!this.currencyTokenContractData.isNull" >
@@ -177,7 +188,7 @@ import TabsBar from './components/TabsBar.vue';
 import GenericTable from './components/GenericTable.vue';
 import GenericDropdown from './components/GenericDropdown.vue';
  
-import EIP712Utils from '../js/EIP712/EIP712Utils.js'
+import IPFSDataHelper from '../js/ipfs-data-helper.js'
 
 const eip712config = require('../js/EIP712/eip712-config.json')
 
@@ -313,6 +324,34 @@ export default {
 
         this.updateBalances()
 
+
+         this.updateMintableTokenData()
+
+
+      try{
+
+       let manifestFileHash = this.getIPFSHashFromString( parsedDefinition.uri )
+
+        let manifestFileJSON = await IPFSDataHelper.resolveGetRequest(`https://cloudflare-ipfs.com/ipfs/${manifestFileHash}`)
+
+          console.log('meep',manifestFileJSON)
+        let manifestContents =  manifestFileJSON  
+
+
+        let imageFileHash = this.getIPFSHashFromString( manifestContents.image ) 
+
+        this.assetImageSource = `https://cloudflare-ipfs.com/ipfs/${imageFileHash}`
+      }catch(e){
+        console.error(e)
+      }
+       
+
+
+          
+          console.log('this.assetImageSource',this.assetImageSource)
+
+            this.$forceUpdate(); 
+
     },
 
 
@@ -349,6 +388,26 @@ export default {
      
         this.$forceUpdate(); 
       }
+
+    },
+
+
+    async updateMintableTokenData(){
+
+        let minterAddress = this.web3Plug.getActiveAccountAddress()
+
+        let chainId = this.web3Plug.getActiveNetId()
+
+        let nftContractAddress  =  this.web3Plug.getContractDataForNetworkID(chainId)['digitalNFT'].address
+        
+        let nftContract = this.web3Plug.getCustomContract( DigitalNFTABI, nftContractAddress );
+
+        return 
+
+        let projectId = 0 // need to take the hash of the contents data to find project id 
+
+        let mintedCopies = await nftContract.methods.projectIdToMintedCopies(  projectId ).call()
+
 
     },
 
@@ -449,12 +508,24 @@ export default {
         this.mintSubmitComplete=false
     },
 
-    getCloudflareIPFSURL(hash){
+
+    getIPFSHashFromString(hash){
       if(hash.includes("://")){
         hash = hash.split('://')[1]
       }
 
+      return  hash
+
+    },
+    getCloudflareIPFSURL(hash){
+      hash = this.getIPFSHashFromString(hash)
+
       return `https://cloudflare-ipfs.com/ipfs/${hash}`
+
+    },
+
+      getAssetImageSource(){
+        return this.assetImageSource
 
     }
           
