@@ -363,7 +363,13 @@ export default {
       dataValues.signature = signature 
 
 
-      this.definedNFTJSON = JSON.stringify( dataValues  )
+      let finalDefinition = Object.assign({},dataValues)
+
+
+      finalDefinition.contractAddress = nftContract.options.address 
+      finalDefinition.artName = this.formInputs.artName
+
+      this.definedNFTJSON = JSON.stringify( finalDefinition  )
 
      console.log('definedNFTJSON',this.definedNFTJSON)
 
