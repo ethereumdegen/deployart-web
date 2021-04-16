@@ -104,7 +104,7 @@
                   
     
                     <div class="  p-4">
-                        <div @click="mintToken" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Mint NFT </div>
+                        <div @click="mintToken" class="select-none bg-green-300 hover:bg-green-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Mint NFT </div>
                     </div>
 
 
@@ -245,17 +245,9 @@ export default {
     let contractData = this.web3Plug.getContractDataForNetworkID(chainId)
  
 
-    let currencyTypesArray = this.web3Plug.getCurrencyTokensForNetworkID(chainId)
-   
-      this.currencyTokensOptionsList = [{"name":"none","label":"None" } ].concat( currencyTypesArray  )
-    
-    
-    let nftTypesArray =   this.web3Plug.getNFTTypesForNetworkID(chainId)  
-   
+  
 
-     this.nftOptionsList = [{"name":"any","label":"Any" } ].concat( nftTypesArray  )
-
-
+    this.readDefinitionFromURL() 
   }, 
 
   beforeDestroy(){
@@ -263,6 +255,39 @@ export default {
 
   },
   methods: {
+
+
+      //http://localhost:8080/virtual?artist=012321
+    async readDefinitionFromURL(){
+      
+
+          var url_string = window.location.href
+          var url = new URL(url_string);
+          var signature = url.searchParams.get("signature");
+
+          if(!signature) return ;
+
+          var definition =  {
+              artist: url.searchParams.get("artist"),
+              keypassToken: url.searchParams.get("keypassToken"),
+              uri: url.searchParams.get("uri"),
+              maxCopies: url.searchParams.get("maxCopies"),
+              expirationBlock:  url.searchParams.get("expirationBlock"),
+              currencyToken:  url.searchParams.get("currencyToken"),
+              currencyAmount:  url.searchParams.get("currencyAmount"),
+              signature:  url.searchParams.get("signature")
+            }  
+
+       
+         this.pastedNFTDefinition = JSON.stringify(definition)
+
+         console.log('this.nftDefinition',this.nftDefinition);
+
+         this.readPastedDefinition()
+
+    },
+
+
 
     async readPastedDefinition(){
       console.log('read ',  this.pastedNFTDefinition)

@@ -101,4 +101,11 @@ export default class FrontendHelper {
     }
 
 
+    static getVirtualNFTUrlParams(params){
+ 
+        return `?artist=${params.artist}&keypassToken=${params.keypassToken}&uri=${params.uri}&maxCopies=${params.maxCopies}&expirationBlock=${params.expirationBlock}&currencyToken=${params.currencyToken}&currencyAmount=${params.currencyAmount}&signature=${params.signature}`
+
+    }
+
+
 }

@@ -10,7 +10,7 @@ import Dashboard from './views/Dashboard.vue'
 import Define from './views/Define.vue'
  
 import Mint from './views/Mint.vue'
- 
+   
 
 import NotFound from './views/NotFound.vue'
 
@@ -44,7 +44,8 @@ export default new Router({
       name: 'mint',
       component: Mint
     } ,
-    
+
+ 
 
    
     {
