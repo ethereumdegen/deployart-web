@@ -142,12 +142,11 @@
             
                     <div class="flex-grow"> </div> 
 
-                          <div @click="copyReferralLink" class="select-none bg-purple-300 hover:bg-purple-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Referral Link </div>
+                          <div  v-if="connectedToWeb3"  @click="copyReferralLink" class="select-none bg-purple-300 hover:bg-purple-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Referral Link </div>
                
             </div>
 
-
-                     
+ 
 
 
        </div>  <!-- has definition --> 
