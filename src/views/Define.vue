@@ -334,6 +334,7 @@ export default {
 
        let dataValues = {
         artist:artistAddress,
+      
         keypassToken: this.formInputs.selectedNFT ,
         uri: artURI,
         maxCopies: parseInt( this.formInputs.maxCopies ),
@@ -373,20 +374,14 @@ export default {
       finalDefinition.contractAddress = nftContract.options.address 
       finalDefinition.artName = this.formInputs.artName
 
-      this.virtualNFTParamString =  FrontendHelper.getVirtualNFTUrlParams(finalDefinition)
+     // this.virtualNFTParamString =  FrontendHelper.getVirtualNFTUrlParams(finalDefinition)
 
       this.definedNFTJSON = JSON.stringify( finalDefinition  )
 
      console.log('definedNFTJSON',this.definedNFTJSON)
 
 
-      //send this data up to the server in a broadcast !!! 
-
-      // then it will show up in the gallery of possible NFTs to mint !! 
-
-      //allow people to register their eth address to a name by offchain sign 
-
-    //  let response = await nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress })
+      
     },
 
     currencyIsSelected(){
@@ -407,7 +402,11 @@ export default {
     },
     getLinkToVirtualNFT(){
 
-      return '/mint'.concat(this.virtualNFTParamString)
+      let definition = JSON.parse( this.definedNFTJSON )
+
+      definition.referralAddress = FrontendHelper.ZeroAddress() 
+
+      return FrontendHelper.getLinkToVirtualNFT(definition) // '/mint'.concat(this.virtualNFTParamString)
     }
           
   }

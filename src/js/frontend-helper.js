@@ -83,11 +83,16 @@ export default class FrontendHelper {
 
     }
 
+
+    static ZeroAddress(){
+        return "0x0000000000000000000000000000000000000000"
+    }
+
     static findContractDataFromAddress(contractAddress, chainId){
 
         contractAddress = contractAddress.toLowerCase()
 
-        if(contractAddress == "0x0000000000000000000000000000000000000000"){
+        if(contractAddress == FrontendHelper.ZeroAddress()){
             return {"name": "None", "address": contractAddress , 'isNull': true}
         }
 
@@ -101,9 +106,16 @@ export default class FrontendHelper {
     }
 
 
+    static getLinkToVirtualNFT(params){
+
+        return '/mint'.concat(FrontendHelper.getVirtualNFTUrlParams(params))
+      }
+
     static getVirtualNFTUrlParams(params){
+
+        if(!params.referralAddress){params.referralAddress = FrontendHelper.ZeroAddress()}
  
-        return `?artist=${params.artist}&keypassToken=${params.keypassToken}&uri=${params.uri}&maxCopies=${params.maxCopies}&expirationBlock=${params.expirationBlock}&currencyToken=${params.currencyToken}&currencyAmount=${params.currencyAmount}&signature=${params.signature}`
+        return `?artist=${params.artist}&referralAddress=${params.referralAddress}&keypassToken=${params.keypassToken}&uri=${params.uri}&maxCopies=${params.maxCopies}&expirationBlock=${params.expirationBlock}&currencyToken=${params.currencyToken}&currencyAmount=${params.currencyAmount}&signature=${params.signature}`
 
     }
 

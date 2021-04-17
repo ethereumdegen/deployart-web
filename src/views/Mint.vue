@@ -74,7 +74,7 @@
               </div>
 
 
-              <div class="mb-4" v-if="!this.currencyTokenContractData.isNull && connectedToWeb3" >
+              <div class="mb-4" v-if="currencyTokenContractData !=null && !currencyTokenContractData.isNull && connectedToWeb3" >
                     <label   class="block text-md font-medium font-bold text-gray-800  "> Cost to Mint NFT (paid to artist) </label>
                     
 
@@ -85,7 +85,7 @@
                     
                      
 
-                        <div> Cost:  {{this.currencyTokenContractData.currencyAmountFormatted}} {{this.currencyTokenContractData.name}} </div>
+                        <div> Cost:  {{currencyTokenContractData.currencyAmountFormatted}} {{this.currencyTokenContractData.name}} </div>
                          <div class="hidden"> Currency Address:  {{this.currencyTokenContractData.address}} </div>
 
                       <div class="  p-4" v-if="approveButtonIsVisible()">
@@ -100,7 +100,7 @@
 
                 
 
-              <div class="mb-4" v-if="!this.requiredNFTData.isNull && connectedToWeb3">
+              <div class="mb-4" v-if="requiredNFTData!=null && !requiredNFTData.isNull && connectedToWeb3">
               <label   class="block text-md font-medium font-bold text-gray-800  ">Required NFT Held to Mint</label>
                     
                   <div> NFT:  {{this.requiredNFTData.name}}</div>
@@ -114,7 +114,7 @@
     
                     <div class="  p-4">
                         <div @click="mintToken" class="select-none bg-green-300 hover:bg-green-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Mint NFT </div>
-                    </div>
+                         </div>
 
 
               </div>
@@ -142,23 +142,18 @@
             </div>
 
 
+                    <div class="  p-4"  v-if=" connectedToWeb3">
+                           <div @click="copyReferralLink" class="select-none bg-purple-300 hover:bg-purple-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Referral Link </div>
+                    </div>
+
+
 
        </div>  <!-- has definition --> 
  
-
-
-
-
-
+  
           </div><!-- connected --> 
 
-        
-
-      
-
-
-
-          
+           
        </div>
      </div>
    </div>
@@ -226,7 +221,7 @@ export default {
     }
   },
 
-  created(){
+  async created(){
 
  
     this.web3Plug.getPlugEventEmitter().on('stateChanged', async function(connectionState) {
@@ -252,6 +247,8 @@ export default {
       
       balanceTimer = setInterval(this.updateBalances, 8000);
 
+        await this.readDefinitionFromURL() 
+
   },
   mounted: function () {
 
@@ -261,7 +258,7 @@ export default {
 
   
 
-    this.readDefinitionFromURL() 
+    
   }, 
 
   beforeDestroy(){
@@ -283,6 +280,7 @@ export default {
 
           var definition =  {
               artist: url.searchParams.get("artist"),
+              referralAddress:  url.searchParams.get("referralAddress"),
               keypassToken: url.searchParams.get("keypassToken"),
               uri: url.searchParams.get("uri"),
               maxCopies: url.searchParams.get("maxCopies"),
@@ -291,6 +289,12 @@ export default {
               currencyAmount:  url.searchParams.get("currencyAmount"),
               signature:  url.searchParams.get("signature")
             }  
+
+
+          if(!definition.referralAddress){
+            definition.referralAddress = FrontendHelper.ZeroAddress()
+          }
+
 
        
          this.pastedNFTDefinition = JSON.stringify(definition)
@@ -308,18 +312,22 @@ export default {
 
       if(this.pastedNFTDefinition){
         this.nftDefinition =  JSON.parse(this.pastedNFTDefinition)  
-        this.hasDefinition = true; 
-
-      
+        this.hasDefinition = true;       
       }
 
       let parsedDefinition = this.nftDefinition
 
       let chainId = this.web3Plug.getActiveNetId()
 
+
+      if(!parsedDefinition.currencyToken){
+        parsedDefinition.currencyToken = FrontendHelper.ZeroAddress()
+        console.log('WARN: null currency address')
+      }
+
       this.currencyTokenContractData = FrontendHelper.findContractDataFromAddress(parsedDefinition.currencyToken,chainId)
 
-      if(!this.currencyTokenContractData.isNull){
+      if(this.currencyTokenContractData && !this.currencyTokenContractData.isNull){
         this.currencyTokenContractData.currencyAmountFormatted = MathHelper.rawAmountToFormatted(  parsedDefinition.currencyAmount ,this.currencyTokenContractData.decimals  )
       }
 
@@ -433,9 +441,14 @@ export default {
 
 
        
+        if(!parsedDefinition.referralAddress){
+          parsedDefinition.referralAddress = FrontendHelper.ZeroAddress()
+        }
+
 
        let dataValues = {
         artist: parsedDefinition.artist,
+        referralAddress: parsedDefinition.referralAddress, 
         keypassToken:parsedDefinition.keypassToken,
         uri: parsedDefinition.uri,
         maxCopies: parsedDefinition.maxCopies,
@@ -455,11 +468,11 @@ export default {
 
       let args = Object.values( dataValues )
  
-
+      console.log('args',args)
       console.log('minterAddress',minterAddress)
 
 
-      nftContract.methods.mint(minterAddress, ...args ).send({from:  minterAddress }).then((value) => {
+      nftContract.methods.mint( ...args ).send({from:  minterAddress }).then((value) => {
             console.log('response',value)
 
            this.mintSubmitComplete=true
@@ -509,6 +522,33 @@ export default {
 
         this.hasDefinition = false
         this.mintSubmitComplete=false
+    },
+
+
+    copyReferralLink(){
+
+ 
+      let referralAddress = this.web3Plug.getActiveAccountAddress()  
+      let definition = Object.assign({},    this.nftDefinition , {referralAddress: referralAddress}   )
+
+
+       console.log('definition', definition)
+
+      let refLink = FrontendHelper.getLinkToVirtualNFT(  definition )
+
+      let windowLocation = (new URL(window.location.href));
+
+      var urlroot = windowLocation.protocol +'//'+  windowLocation.hostname 
+
+      if( windowLocation.port ){
+        urlroot += ':' +   windowLocation.port
+      }
+
+      console.log('reflink', urlroot, refLink)
+
+      this.$clipboard( urlroot.concat(refLink) );
+      alert("Copied to clipboard");
+
     },
 
 
