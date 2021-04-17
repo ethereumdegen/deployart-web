@@ -54,15 +54,15 @@
 
                <div class="w-full mb-4 lg:flex lg:flex-row">  
 
-                    <div class="lg:w-2/3 text-sm" > 
+                    <div class="lg:w-2/3" > 
                 
                         <label   class="block text-md font-medium font-bold text-gray-800  ">NFT Definition</label>
                             
-                          <div> Artist:  {{nftDefinition.artist}}</div>
+                          <div class=" text-xs"> Artist:  {{nftDefinition.artist}}</div>
                           
-                          <div> Token URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
+                          <div  class=" text-xs" > Token URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
 
-                            <div> Max Copies:  {{nftDefinition.maxCopies}}</div> 
+                            <div  class=" text-xs"> Max Copies:  {{nftDefinition.maxCopies}}</div> 
 
                     </div>
 
@@ -85,8 +85,8 @@
                     
                      
 
-                        <div> Cost:  {{currencyTokenContractData.currencyAmountFormatted}} {{this.currencyTokenContractData.name}} </div>
-                         <div class="hidden"> Currency Address:  {{this.currencyTokenContractData.address}} </div>
+                        <div class="mt-4 text-sm "> Cost:  {{currencyTokenContractData.currencyAmountFormatted}} {{this.currencyTokenContractData.name}} </div>
+                         <div class="hidden text-sm "> Currency Address:  {{this.currencyTokenContractData.address}} </div>
 
                       <div class="  p-4" v-if="approveButtonIsVisible()">
                             <div @click="approveCurrencyToken" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Approve </div>
@@ -137,15 +137,17 @@
               <NotConnectedToWeb3 />
           </div>
 
-          <div class="  p-4">
+          <div class=" flex flex-row p-4">
                   <div @click="resetForm" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Reset </div>
+            
+                    <div class="flex-grow"> </div> 
+
+                          <div @click="copyReferralLink" class="select-none bg-purple-300 hover:bg-purple-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Referral Link </div>
+               
             </div>
 
 
-                    <div class="  p-4"  v-if=" connectedToWeb3">
-                           <div @click="copyReferralLink" class="select-none bg-purple-300 hover:bg-purple-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Referral Link </div>
-                    </div>
-
+                     
 
 
        </div>  <!-- has definition --> 
