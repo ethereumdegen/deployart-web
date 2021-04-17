@@ -119,5 +119,14 @@ export default class FrontendHelper {
 
     }
 
+   /* static formatDecimalNumber(numberString){
+
+        if(!numberString.includes('.')) return numberString;
+
+        let segments = numberString.split['.']
+
+        return segments[0] + '.' + segments[1]
+    }*/
+
 
 }

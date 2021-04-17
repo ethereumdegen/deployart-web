@@ -328,8 +328,13 @@ export default {
       this.currencyTokenContractData = FrontendHelper.findContractDataFromAddress(parsedDefinition.currencyToken,chainId)
 
       if(this.currencyTokenContractData && !this.currencyTokenContractData.isNull){
-        this.currencyTokenContractData.currencyAmountFormatted = MathHelper.rawAmountToFormatted(  parsedDefinition.currencyAmount ,this.currencyTokenContractData.decimals  )
-      }
+            let formattedAmount = MathHelper.rawAmountToFormatted(  parsedDefinition.currencyAmount ,this.currencyTokenContractData.decimals  )
+
+            formattedAmount = parseFloat(formattedAmount).toString()
+
+           this.currencyTokenContractData.currencyAmountFormatted = formattedAmount; 
+  
+     }
 
       this.requiredNFTData = FrontendHelper.findContractDataFromAddress(parsedDefinition.keypassToken,chainId)
 
