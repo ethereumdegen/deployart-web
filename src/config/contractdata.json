@@ -12,7 +12,7 @@
       "weth":{"name":"wEth","address":"0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2", "decimals":18, "minBidAmount":0.02},
       
      
-      "digitalNFT":{"name":"digitalNFT","address":" ", "projectId": 0} ,
+      "digitalNFT":{"name":"digitalNFT","address":"0x4e3c5d37ca4d92b54248c411b496a0c959bcfe57", "projectId": 0} ,
     
       "digitaltoast":{"name":"DigitalToast","address":"0x9b2214d749f736873b2232a54889342610878651"} 
  
