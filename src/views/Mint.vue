@@ -124,7 +124,7 @@
                   
                 <div> The art has been deployed! Enjoy. </div>
 
-                
+                <div>  <a v-bind:href="getActiveUserEtherscanURL()" target="_blank" > View my Ethereum Account. </a>  </div>
 
               </div>
 
@@ -551,6 +551,15 @@ export default {
 
     },
 
+
+    getActiveUserEtherscanURL(){
+
+        let minterAddress = this.web3Plug.getActiveAccountAddress()
+         
+
+      return this.web3Plug.getExplorerLinkForAddress(minterAddress) 
+
+    },
 
     getIPFSHashFromString(hash){
       if(hash.includes("://")){
