@@ -35,17 +35,32 @@ a {
  
   
   /* Chrome, Safari, Opera */
- -webkit-animation: rainbow 5s infinite; 
+ -webkit-animation: rainbow-text 5s infinite; 
  
  /* Internet Explorer */
- -ms-animation: rainbow 5s infinite;
+ -ms-animation: rainbow-text 5s infinite;
  
  /* Standar Syntax */
- animation: rainbow 5s infinite; 
+ animation: rainbow-text 5s infinite; 
+}
+
+.hover-bg-rainbow:hover {
+  
+  /* Font options */
+ 
+  
+  /* Chrome, Safari, Opera */
+ -webkit-animation: rainbow 15s infinite; 
+ 
+ /* Internet Explorer */
+ -ms-animation: rainbow 15s infinite;
+ 
+ /* Standar Syntax */
+ animation: rainbow 15s infinite; 
 }
 
 /* Chrome, Safari, Opera */
-@-webkit-keyframes rainbow{
+@-webkit-keyframes rainbow-text{
  0%{color: orange;}	
  10%{color: purple;}	
  20%{color: red;}
@@ -60,7 +75,7 @@ a {
 }
 
 /* Internet Explorer */
-@-ms-keyframes rainbow{
+@-ms-keyframes rainbow-text{
   0%{color: orange;}	
  10%{color: purple;}	
  20%{color: red;}
@@ -75,7 +90,7 @@ a {
 }
 
 /* Standar Syntax */
-@keyframes rainbow{
+@keyframes rainbow-text{
    0%{color: orange;}	
  10%{color: purple;}	
  20%{color: red;}
@@ -91,6 +106,51 @@ a {
 
 
 
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes rainbow{
+  0%{background: orange;}	
+  10%{background: purple;}	
+  20%{background: red;}
+  30%{background: CadetBlue;}
+  40%{background: yellow;}
+  50%{background: coral;}
+  60%{background: green;}
+  70%{background: cyan;}
+  80%{background: DeepPink;}
+  90%{background: DodgerBlue;}
+  100%{background: orange;}
+ }
+ 
+ /* Internet Explorer */
+ @-ms-keyframes rainbow{
+   0%{background: orange;}	
+  10%{background: purple;}	
+  20%{background: red;}
+  30%{background: CadetBlue;}
+  40%{background: yellow;}
+  50%{background: coral;}
+  60%{background: green;}
+  70%{background: cyan;}
+  80%{background: DeepPink;}
+  90%{background: DodgerBlue;}
+  100%{background: orange;}
+ }
+ 
+ /* Standar Syntax */
+ @keyframes rainbow{
+    0%{background: orange;}	
+  10%{background: purple;}	
+  20%{background: red;}
+  30%{background: CadetBlue;}
+  40%{background: yellow;}
+  50%{background: coral;}
+  60%{background: green;}
+  70%{background: cyan;}
+  80%{background: DeepPink;}
+  90%{background: DodgerBlue;}
+  100%{background: orange;}
+ }
 
 
 

@@ -28,7 +28,7 @@
             <div class="text-white text-xl my-4">  Launch NFTs for zero gas.  </div> 
 
         <div>
-            <router-link to="/define" class="text-black text-xl my-4 p-2 no-underline bg-purple-500 hover:bg-purple-600 rounded cursor-pointer inline-block"> Deploy an NFT   </router-link> 
+            <router-link to="/define" class="text-white text-xl my-4 p-2 no-underline bg-black hover:bg-purple-600 rounded cursor-pointer inline-block hover-bg-rainbow"> Deploy an NFT   </router-link> 
         </div>
 
 
