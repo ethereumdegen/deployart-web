@@ -17,6 +17,8 @@
           <h3 class=" text-lg font-bold ">Community &amp; Social</h3>
          
              <a href="https://guild.0xbtc.io" target="_blank" class="no-underline text-sm text-gray-200 hover:text-purple-500">Miners Guild</a>
+
+                 <a href="https://digitaltoast.0xbtc.io" target="_blank" class="no-underline text-sm text-gray-200 hover:text-purple-500">Digital Toast</a>
          </div>
 
 
