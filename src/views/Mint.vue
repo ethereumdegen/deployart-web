@@ -58,17 +58,25 @@
                 
                         <label   class="block text-md font-medium font-bold text-gray-800  ">NFT Definition</label>
                             
+                          
+                           <div v-if="assetManifestData && assetManifestData.name" class=" text-xs"> Name:  {{assetManifestData.name}}</div>
+                            
                           <div class=" text-xs"> Artist:  {{nftDefinition.artist}}</div>
+
                           
                           <div  class=" text-xs" > Token URI: <a v-bind:href="getCloudflareIPFSURL(nftDefinition.uri)" target="_blank">  {{nftDefinition.uri}}  </a> </div>
 
                             <div  class=" text-xs"> Max Copies:  {{nftDefinition.maxCopies}}</div> 
 
+                            <div v-if="assetManifestData && assetManifestData.description" class=" text-xs"> Description:  {{assetManifestData.description}}</div>
+                         
+
                     </div>
 
                        <div class="lg:w-1/3 text-center" > 
                         <div class="m-2 p-2 border-black border-2 w-1/2 lg:w-full" style="margin: auto;">
-                         <img v-bind:src="getAssetImageSource()" class=" w-full"  />
+                         <img v-if="!ipfsDataErrored"  v-bind:src="getAssetImageSource()" class=" w-full"  />
+                         <div v-if="ipfsDataErrored" class="bg-red-300 p-4"> IPFS DATA ERROR </div>
                         </div>
                     </div>
               </div>
@@ -213,9 +221,11 @@ export default {
 
       nftDefinition: null,
       parsedNFTDefinition: null,
+
+      assetManifestData: null,
        
       connectedToWeb3: false,
-     
+      ipfsDataErrored: false,
 
       mintSubmitComplete:false,
  
@@ -345,23 +355,29 @@ export default {
          this.updateMintableTokenData()
 
 
-      try{
+      
 
        let manifestFileHash = this.getIPFSHashFromString( parsedDefinition.uri )
 
-        let manifestFileJSON = await IPFSDataHelper.resolveGetRequest(`https://cloudflare-ipfs.com/ipfs/${manifestFileHash}`)
+        IPFSDataHelper.resolveGetRequest(`https://cloudflare-ipfs.com/ipfs/${manifestFileHash}`).then((manifestFileJSON)=>{
 
-          console.log('meep',manifestFileJSON)
-        let manifestContents =  manifestFileJSON  
+             let imageFileHash = this.getIPFSHashFromString( manifestFileJSON.image ) 
 
+                 this.assetManifestData =manifestFileJSON
 
-        let imageFileHash = this.getIPFSHashFromString( manifestContents.image ) 
+               this.assetImageSource = `https://cloudflare-ipfs.com/ipfs/${imageFileHash}`
 
-        this.assetImageSource = `https://cloudflare-ipfs.com/ipfs/${imageFileHash}`
-      }catch(e){
-        console.error(e)
-      }
-       
+               this.$forceUpdate(); 
+
+        }  ).catch(error =>{
+            this.ipfsDataErrored = true 
+
+        } )
+
+            
+
+        //this.assetImageSource = `https://cloudflare-ipfs.com/ipfs/${imageFileHash}`
+      
 
 
           
