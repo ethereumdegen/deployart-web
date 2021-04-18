@@ -76,7 +76,13 @@
                        <div class="lg:w-1/3 text-center" > 
                         <div class="m-2 p-2 border-black border-2 w-1/2 lg:w-full" style="margin: auto;">
                          <img v-if="!ipfsDataErrored"  v-bind:src="getAssetImageSource()" class=" w-full"  />
-                         <div v-if="ipfsDataErrored" class="bg-red-300 p-4"> IPFS DATA ERROR </div>
+                         <div v-if="ipfsDataErrored" class=" p-4"  > 
+                           
+                           <div class="bg-red-300 p-2" > IPFS DATA ERROR </div> 
+
+                           <a href="https://docs.deploy.art/ipfs-uri" class=" "> [help] </a> 
+                           
+                          </div>
                         </div>
                     </div>
               </div>
