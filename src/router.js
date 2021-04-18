@@ -10,6 +10,8 @@ import Dashboard from './views/Dashboard.vue'
 import Define from './views/Define.vue'
  
 import Mint from './views/Mint.vue'
+
+import Grafitti from './views/Grafitti.vue'
    
 
 import NotFound from './views/NotFound.vue'
@@ -45,7 +47,12 @@ export default new Router({
       component: Mint
     } ,
 
- 
+    {
+      path: '/grafitti',
+      name: 'grafitti',
+      component: Grafitti
+    } ,
+
 
    
     {
