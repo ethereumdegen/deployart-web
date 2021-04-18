@@ -146,7 +146,7 @@
 
 
                 <div class="  p-4">
-                     <div @click="copyDefinition" class="select-none bg-blue-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Definition </div>
+                     <div @click="copyDefinition" class="select-none bg-white  p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Definition </div>
                 
                        <div @click="resetForm" class="ml-4 select-none bg-red-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Reset Form </div>
             
@@ -157,8 +157,11 @@
                  <div class="  p-4">
                     <div class="m-2 p-2 bg-gray-200 text-blue-800 inline-block"> This NFT definition can be used, by anyone, to mint the NFT on-chain. It is digitally signed by you as the artist.  </div> 
                     <br> 
-                     <a v-bind:href="getLinkToVirtualNFT()" class="m-2 select-none no-underline text-white bg-green-500 p-2 inline-block rounded border-black border-2 cursor-pointer"> Mint the NFT </a >
-                     <a v-bind:href="getLinkToVirtualNFT()" target="_blank" class="m-2 select-none no-underline text-black bg-yellow-300  hover:bg-yellow-200 p-2 inline-block rounded border-black border-2 cursor-pointer">  Virtual NFT Page (share) </a >
+                     <a v-bind:href="getLinkToVirtualNFT()" class="select-none font-bold no-underline text-gray-600 p-2 inline-block rounded border-gray-600 border-2 cursor-pointer rainbow-hover "> Mint the NFT </a >
+                    
+                     
+                    
+                     <a v-bind:href="getLinkToVirtualNFT()" target="_blank" class="m-2 select-none no-underline text-white bg-black  hover:bg-gray-700 p-2 inline-block rounded border-black border-2 cursor-pointer">  Virtual NFT Page (share) </a >
            </div>
 
  

@@ -62,12 +62,12 @@ a {
 /* Chrome, Safari, Opera */
 @-webkit-keyframes rainbow-text{
  0%{color: orange;}	
- 10%{color: purple;}	
+ 10%{color: rgb(235, 32, 235);}	
  20%{color: red;}
  30%{color: CadetBlue;}
  40%{color: yellow;}
  50%{color: coral;}
- 60%{color: green;}
+ 60%{color: rgb(17, 224, 17);}
  70%{color: cyan;}
  80%{color: DeepPink;}
  90%{color: DodgerBlue;}
@@ -77,12 +77,12 @@ a {
 /* Internet Explorer */
 @-ms-keyframes rainbow-text{
   0%{color: orange;}	
- 10%{color: purple;}	
+ 10%{color: rgb(235, 32, 235);}	
  20%{color: red;}
  30%{color: CadetBlue;}
  40%{color: yellow;}
  50%{color: coral;}
- 60%{color: green;}
+ 60%{color: rgb(17, 224, 17);}
  70%{color: cyan;}
  80%{color: DeepPink;}
  90%{color: DodgerBlue;}
@@ -92,12 +92,12 @@ a {
 /* Standar Syntax */
 @keyframes rainbow-text{
    0%{color: orange;}	
- 10%{color: purple;}	
+ 10%{color: rgb(235, 32, 235);}	
  20%{color: red;}
  30%{color: CadetBlue;}
  40%{color: yellow;}
  50%{color: coral;}
- 60%{color: green;}
+ 60%{color: rgb(17, 224, 17);}
  70%{color: cyan;}
  80%{color: DeepPink;}
  90%{color: DodgerBlue;}
@@ -110,12 +110,12 @@ a {
 /* Chrome, Safari, Opera */
 @-webkit-keyframes rainbow{
   0%{background: orange;}	
-  10%{background: purple;}	
+  10%{background: rgb(235, 32, 235);}	
   20%{background: red;}
   30%{background: CadetBlue;}
   40%{background: yellow;}
   50%{background: coral;}
-  60%{background: green;}
+  60%{background: rgb(17, 224, 17);}
   70%{background: cyan;}
   80%{background: DeepPink;}
   90%{background: DodgerBlue;}
@@ -125,12 +125,12 @@ a {
  /* Internet Explorer */
  @-ms-keyframes rainbow{
    0%{background: orange;}	
-  10%{background: purple;}	
+  10%{background: rgb(235, 32, 235);}	
   20%{background: red;}
   30%{background: CadetBlue;}
   40%{background: yellow;}
   50%{background: coral;}
-  60%{background: green;}
+  60%{background: rgb(17, 224, 17);}
   70%{background: cyan;}
   80%{background: DeepPink;}
   90%{background: DodgerBlue;}
@@ -140,12 +140,12 @@ a {
  /* Standar Syntax */
  @keyframes rainbow{
     0%{background: orange;}	
-  10%{background: purple;}	
+  10%{background: rgb(235, 32, 235);}	
   20%{background: red;}
   30%{background: CadetBlue;}
   40%{background: yellow;}
   50%{background: coral;}
-  60%{background: green;}
+  60%{background: rgb(17, 224, 17);}
   70%{background: cyan;}
   80%{background: DeepPink;}
   90%{background: DodgerBlue;}
