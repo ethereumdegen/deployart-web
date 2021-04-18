@@ -36,6 +36,10 @@
      </div>
 
 
+     <div class="text-center"> <a class="text-yellow-400" href="https://infernaltoast.medium.com/infernaltoasts-nft-scavenger-hunt-c1038a176e87"> Read more about obtaining '1164 grafitti' in the Scavenger Hunt </a> </div>
+      
+
+
    </div>
 
   
