@@ -130,7 +130,7 @@
               
  
                  <div class="  p-4">
-                     <div @click="signForMint" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Define NFT </div>
+                     <div @click="signForMint" class="select-none font-bold  p-2 inline-block rounded border-gray-600 border-2 cursor-pointer rainbow-hover"> Define NFT </div>
                 </div>
 
 
@@ -141,12 +141,12 @@
               
               <div> NFT Definition Data </div>
                  <div class="  p-4  ">
-                  <TextArea v-html="definedNFTJSON" class="text-black w-full border-2 border-black p-2" rows="9" disabled/> 
+                  <TextArea v-html="definedNFTJSON" class="text-gray-800 w-full border-2 border-black p-2" rows="9" disabled/> 
                 </div>
 
 
                 <div class="  p-4">
-                     <div @click="copyDefinition" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Definition </div>
+                     <div @click="copyDefinition" class="select-none bg-blue-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Copy Definition </div>
                 
                        <div @click="resetForm" class="ml-4 select-none bg-red-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Reset Form </div>
             
@@ -158,7 +158,7 @@
                     <div class="m-2 p-2 bg-gray-200 text-blue-800 inline-block"> This NFT definition can be used, by anyone, to mint the NFT on-chain. It is digitally signed by you as the artist.  </div> 
                     <br> 
                      <a v-bind:href="getLinkToVirtualNFT()" class="m-2 select-none no-underline text-white bg-green-500 p-2 inline-block rounded border-black border-2 cursor-pointer"> Mint the NFT </a >
-                     <a v-bind:href="getLinkToVirtualNFT()" target="_blank" class="m-2 select-none no-underline text-black bg-yellow-300 p-2 inline-block rounded border-black border-2 cursor-pointer">  Virtual NFT Page (share) </a >
+                     <a v-bind:href="getLinkToVirtualNFT()" target="_blank" class="m-2 select-none no-underline text-black bg-yellow-300  hover:bg-yellow-200 p-2 inline-block rounded border-black border-2 cursor-pointer">  Virtual NFT Page (share) </a >
            </div>
 
  

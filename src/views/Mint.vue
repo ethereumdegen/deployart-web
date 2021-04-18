@@ -41,8 +41,11 @@
 
 
                 <div class="  p-4">
-                     <div @click="readPastedDefinition" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer">Continue </div>
+                     <div @click="readPastedDefinition" class="select-none bg-white-300 p-2 inline-block rounded border-black border-2 cursor-pointer">Continue </div>
                 </div>
+
+
+
           </div>
 
              
@@ -124,11 +127,12 @@
 
 
               <div class="py-4" v-if="!mintSubmitComplete && connectedToWeb3">
-                  
-    
-                    <div class="  p-4">
-                        <div @click="mintToken" class="select-none bg-green-300 hover:bg-green-400 p-2 inline-block rounded border-black border-2 cursor-pointer"> Mint NFT </div>
-                         </div>
+
+                  <div class="  p-4">
+                     <div @click="mintToken" class="select-none font-bold  p-2 inline-block rounded border-gray-600 border-2 cursor-pointer rainbow-hover px-8"> Mint </div>
+                </div>
+
+     
 
 
               </div>
@@ -151,8 +155,8 @@
               <NotConnectedToWeb3 />
           </div>
 
-          <div class=" flex flex-row p-4">
-                  <div @click="resetForm" class="select-none bg-teal-300 p-2 inline-block rounded border-black border-2 cursor-pointer"> Reset </div>
+          <div class=" flex flex-row p-4" v-if="connectedToWeb3">
+                  <div @click="resetForm" class="select-none bg-red-300 p-2 inline-block rounded   border-black border-2 cursor-pointer"> Reset </div>
             
                     <div class="flex-grow"> </div> 
 
