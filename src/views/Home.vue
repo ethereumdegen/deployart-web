@@ -33,7 +33,7 @@
 
 
         <div>
-            <a href="https://www.youtube.com/watch?v=nBeKv71Y46Q" target="_blank" class="text-black text-sm my-4 p-2 no-underline bg-blue-500 hover:bg-blue-600 rounded cursor-pointer inline-block"> 📺  Watch the Vid   </a> 
+            <a href="https://www.youtube.com/watch?v=nBeKv71Y46Q" target="_blank" class="text-black text-sm my-4 p-2 no-underline bg-gray-500 hover:bg-gray-600 rounded cursor-pointer inline-block"> 📺  Watch the Vid   </a> 
         </div>
             
 
