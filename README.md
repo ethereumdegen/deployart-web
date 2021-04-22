@@ -6,12 +6,6 @@ Web frontend for NFT Minting
  
 
 
-### TODO 
-
--form to define a MintPacket 
--form to Mint 
-
-
 ### Development commands
 ```
 npm install
