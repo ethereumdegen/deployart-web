@@ -70,6 +70,8 @@ import Footer from './components/Footer.vue';
  
 import FrontendHelper from '../js/frontend-helper.js'
 
+import StarflaskAPIHelper from '../js/starflask-api-helper.js'
+
 export default {
   name: 'Grafitti',
   props: [],
@@ -106,14 +108,9 @@ export default {
       }.bind(this));
 
       this.web3Plug.reconnectWeb()
-    
 
-
-      this.imageArray.push({src:'/images/grafitti/Grafitti_0.jpg', ownerAddress:'?'})
-      this.imageArray.push({src:'/images/grafitti/Grafitti_1.jpg', ownerAddress:'?'})
-      this.imageArray.push({src:'/images/grafitti/Grafitti_2.jpg', ownerAddress:'?'})
-      this.imageArray.push({src:'/images/grafitti/Grafitti_3.jpg', ownerAddress:'?'})
-      this.imageArray.push({src:'/images/grafitti/Grafitti_4.jpg', ownerAddress:'?'})
+      this.fetchGraffitiData()  
+      
 
   },
   mounted: function () {
@@ -122,6 +119,54 @@ export default {
    
   }, 
   methods: {
+
+    async fetchGraffitiData(){
+
+      const tokenIdOwners = [] 
+
+      const grafittiData = {
+        '0': {src: '/images/grafitti/Grafitti_0.jpg' , tokenId: 0 },
+        '1': {src: '/images/grafitti/Grafitti_1.jpg' , tokenId: undefined },
+        '2': {src: '/images/grafitti/Grafitti_2.jpg' , tokenId: undefined },
+        '3': {src: '/images/grafitti/Grafitti_3.jpg' , tokenId: undefined },
+        '4': {src: '/images/grafitti/Grafitti_4.jpg' , tokenId: undefined } 
+      }
+
+      let apiURI = 'https://api.starflask.com/api/v1/testapikey'
+      let inputData = {requestType: 'ERC721_balance_by_token', input: { token:'0x4e3c5d37ca4d92b54248c411b496a0c959bcfe57' } } 
+      let results = await StarflaskAPIHelper.resolveStarflaskQuery(apiURI ,  inputData   )
+      console.log('results',results)
+
+
+      for(let artOwner of results.output){
+        for(let tokenIdOwned of artOwner.tokenIds){
+          let id = parseInt(  tokenIdOwned  )
+          tokenIdOwners[id] = artOwner.accountAddress;
+        }
+
+      }
+ 
+
+      for(let [index, data] of Object.entries(grafittiData)){
+        let newImageData = Object.assign({}, data ) 
+ 
+        if(typeof newImageData.tokenId != 'undefined' && tokenIdOwners[newImageData.tokenId] ){
+       
+          newImageData.ownerAddress = tokenIdOwners[newImageData.tokenId] 
+            
+        }
+
+        if(!newImageData.ownerAddress){
+           newImageData.ownerAddress = '?'
+        } 
+
+        this.imageArray.push(newImageData)
+      }
+
+    
+
+
+    }
           
   }
 }
