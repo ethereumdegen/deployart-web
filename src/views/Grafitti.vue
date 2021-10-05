@@ -128,7 +128,7 @@ export default {
         '0': {src: '/images/grafitti/Grafitti_0.jpg' , tokenId: 0 },
         '1': {src: '/images/grafitti/Grafitti_1.jpg' , tokenId: 2 },
         '2': {src: '/images/grafitti/Grafitti_2.jpg' , tokenId: undefined },
-        '3': {src: '/images/grafitti/Grafitti_3.jpg' , tokenId: undefined },
+        '3': {src: '/images/grafitti/Grafitti_3.jpg' , tokenId: 3 },
         '4': {src: '/images/grafitti/Grafitti_4.jpg' , tokenId: undefined } 
       }
 
