@@ -133,7 +133,7 @@ export default {
       }
 
       let apiURI = 'https://api.starflask.com/api/v1/testapikey'
-      let inputData = {requestType: 'ERC721_balance_by_token', input: { token:'0x4e3c5d37ca4d92b54248c411b496a0c959bcfe57' } } 
+      let inputData = {requestType: 'ERC721_balance_by_contract', input: { contractAddress:'0x4e3c5d37ca4d92b54248c411b496a0c959bcfe57' } } 
       let results = await StarflaskAPIHelper.resolveStarflaskQuery(apiURI ,  inputData   )
       console.log('results',results)
 
